@@ -3,5 +3,5 @@
   <Project Path="GymPortal.Domain.Tests/GymPortal.Domain.Tests.csproj" Id="1461b6e6-74ff-40c3-8755-94fff531b738" />
   <Project Path="GymPortal.Domain/GymPortal.Domain.csproj" Id="e7b935ee-c640-41e7-b705-02ca8a0b57a4" />
   <Project Path="GymPortal.Infrastructure/GymPortal.Infrastructure.csproj" Id="c877847a-91f7-4472-ab4d-2be4bf8ba64b" />
-  <Project Path="GymPortal/GymPortal.csproj" />
+  <Project Path="GymPortal/GymPortal.Web.csproj" />
 </Solution>

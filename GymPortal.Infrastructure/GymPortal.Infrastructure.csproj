@@ -17,4 +17,10 @@
     <ProjectReference Include="..\GymPortal.Domain\GymPortal.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Identity\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
