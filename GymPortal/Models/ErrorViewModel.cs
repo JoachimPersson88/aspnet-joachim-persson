@@ -1,4 +1,4 @@
-namespace GymPortal.Models
+namespace GymPortal.Web.Models
 {
     public class ErrorViewModel
     {
