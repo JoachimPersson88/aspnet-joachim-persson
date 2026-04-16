@@ -1,4 +1,5 @@
 ﻿using GymPortal.Infrastructure.Identity;
+using GymPortal.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -94,7 +95,7 @@ public class AccountController : Controller
             return RedirectToAction("Index", "Home");
 
         // Om inloggningen misslyckades, lägg till ett generiskt felmeddelande i ModelState och visa formuläret igen.
-        ModelState.AddModelError("", "Felaktig inloggning");
+        ModelState.AddModelError(string.Empty, "Felaktig e-post eller lösenord.");
         return View(model);
     }
 
