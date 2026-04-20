@@ -3,6 +3,8 @@ using GymPortal.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+namespace GymPortal.Web.Controllers;
+
 public class AccountController : Controller
 {
     // Beroendeinjektion av UserManager och SignInManager.

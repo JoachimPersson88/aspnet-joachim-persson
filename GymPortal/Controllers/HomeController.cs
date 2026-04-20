@@ -2,7 +2,7 @@ using GymPortal.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace GymPortal.Controllers
+namespace GymPortal.Web.Controllers
 {
     public class HomeController : Controller
     {
