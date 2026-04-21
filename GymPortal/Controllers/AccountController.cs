@@ -2,6 +2,7 @@
 using GymPortal.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GymPortal.Web.Controllers;
 
@@ -110,5 +111,61 @@ public class AccountController : Controller
         // Logga ut användaren och omdirigera till startsidan.
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+    // ======================== PROFILE ======================== //
+
+    [Authorize] // GET-metod för att visa användarens profil.
+    [HttpGet] // Denna metod kräver att användaren är inloggad (Authorize).
+    public async Task<IActionResult> Profile()
+    {
+        var user = await _userManager.GetUserAsync(User); // Hämta den aktuella användaren baserat på den inloggade användarens kontext.
+
+        if (user == null)
+            return Challenge();
+
+        var model = new ProfileViewModel
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email ?? string.Empty,
+            PhoneNumber = user.PhoneNumber
+        };
+
+        return View(model);
+    }
+
+    [Authorize] // POST-metod för att uppdatera användarens profil.
+    [HttpPost] // Denna metod kräver att användaren är inloggad (Authorize).
+    public async Task<IActionResult> Profile(ProfileViewModel model)
+    {
+        if (!ModelState.IsValid) // Validera modellen. Om den inte är giltig, visa formuläret igen med valideringsfel.
+            return View(model);
+
+        var user = await _userManager.GetUserAsync(User); // Hämta den aktuella användaren baserat på den inloggade användarens kontext.
+
+        if (user == null) // Om användaren inte hittas, returnera en utmaning (Challenge) som kan leda till att användaren omdirigeras till inloggningssidan.
+            return Challenge();
+
+        // Uppdatera användarens information baserat på data från modellen.
+        user.FirstName = model.FirstName;
+        user.LastName = model.LastName;
+        user.Email = model.Email;
+        user.UserName = model.Email;
+        user.PhoneNumber = model.PhoneNumber;
+
+        var result = await _userManager.UpdateAsync(user); // Försök att uppdatera användarens information i databasen.
+
+        if (result.Succeeded) // Om uppdateringen lyckades, visa ett framgångsmeddelande och visa formuläret igen.
+        {
+            // Uppdatera säkerhetsstämplar för att säkerställa att användarens session är uppdaterad med de nya uppgifterna.
+            ViewBag.Message = "Dina uppgifter har uppdaterats.";
+            return View(model);
+        }
+
+        foreach (var error in result.Errors) // Om det uppstod fel under uppdateringen, lägg till felen i ModelState och visa formuläret igen.
+            ModelState.AddModelError(string.Empty, error.Description); // Lägg till varje fel i ModelState så att de kan visas i vyn.
+
+        return View(model);
     }
 }
