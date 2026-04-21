@@ -1,0 +1,45 @@
+﻿@model GymPortal.Web.ViewModels.MembershipViewModel
+@using GymPortal.Domain.Enums
+
+@{
+    ViewData["Title"] = "Medlemskap";
+}
+
+<h2>Mitt medlemskap</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <p style="color: green;">@TempData["SuccessMessage"]</p>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p style="color: red;">@TempData["ErrorMessage"]</p>
+}
+
+@if (Model.Status != null)
+{
+    <p><strong>Typ:</strong> @Model.Type</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Startdatum:</strong> @Model.StartDate?.ToString("yyyy-MM-dd")</p>
+}
+else
+{
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div>
+            <label asp-for="Type"></label>
+            <select asp-for="Type" asp-items="Html.GetEnumSelectList<MembershipType>()"></select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+
+        <button type="submit">Skapa medlemskap</button>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
