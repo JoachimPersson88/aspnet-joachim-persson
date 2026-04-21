@@ -168,4 +168,33 @@ public class AccountController : Controller
 
         return View(model);
     }
+
+    // ======================== DELETE ACCOUNT ======================== //
+
+    [Authorize] 
+    [HttpPost]
+    [ValidateAntiForgeryToken] // POST-metod för att hantera borttagning av användarkonto.
+    public async Task<IActionResult> DeleteAccount()
+    {
+        var user = await _userManager.GetUserAsync(User); // Hämta den aktuella användaren baserat på den inloggade användarens kontext.
+
+        // Om användaren inte hittas, returnera en utmaning (Challenge) som kan leda till att användaren omdirigeras till inloggningssidan.
+        if (user == null)
+            return Challenge();
+
+        await _signInManager.SignOutAsync(); // Logga ut användaren innan kontot tas bort för att säkerställa att sessionen avslutas.
+
+        var result = await _userManager.DeleteAsync(user); // Försök att ta bort användaren från databasen.
+
+        if (!result.Succeeded)
+        {
+            // Om det uppstod fel under borttagningen, visa ett felmeddelande och omdirigera tillbaka till profilvyn.
+            TempData["ErrorMessage"] = "Det gick inte att ta bort kontot.";
+            return RedirectToAction(nameof(Profile));
+        }
+
+        // Om borttagningen lyckades, visa ett framgångsmeddelande och omdirigera till startsidan.
+        TempData["SuccessMessage"] = "Ditt konto har tagits bort.";
+        return RedirectToAction("Index", "Home");
+    }
 }

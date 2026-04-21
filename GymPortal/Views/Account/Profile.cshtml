@@ -11,6 +11,11 @@
     <p style="color: green;">@ViewBag.Message</p>
 }
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <p style="color: red;">@TempData["ErrorMessage"]</p>
+}
+
 <form asp-action="Profile" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -44,3 +49,15 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<hr />
+
+<h3>Ta bort konto</h3>
+<p>Detta tar bort ditt konto och kan inte ångras.</p>
+
+<form asp-action="DeleteAccount" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" onclick="return confirm('Är du säker på att du vill ta bort ditt konto?');">
+        Ta bort mitt konto
+    </button>
+</form>
