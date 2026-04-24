@@ -90,5 +90,40 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             entity.HasIndex(x => new { x.UserId, x.GymClassId })
                 .IsUnique();
         });
+
+        // Här seedar vi initial data för GymClass-entiteten, vilket innebär att vi lägger till några fördefinierade gymklasser i databasen när den skapas eller uppdateras.
+        var yogaId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var spinningId = Guid.Parse("22222222-2222-2222-2222-222222222222");
+        var hiitId = Guid.Parse("33333333-3333-3333-3333-333333333333");
+
+        builder.Entity<GymClass>().HasData(
+            new
+            {
+                Id = yogaId,
+                Name = "Yoga",
+                Category = "Rörlighet",
+                Instructor = "Emma",
+                StartTime = new DateTime(2026, 5, 5, 18, 0, 0),
+                Capacity = 20
+            },
+            new
+            {
+                Id = spinningId,
+                Name = "Spinning",
+                Category = "Kondition",
+                Instructor = "Ali",
+                StartTime = new DateTime(2026, 5, 6, 17, 30, 0),
+                Capacity = 15
+            },
+            new
+            {
+                Id = hiitId,
+                Name = "HIIT",
+                Category = "Styrka/Kondition",
+                Instructor = "Sara",
+                StartTime = new DateTime(2026, 5, 7, 19, 0, 0),
+                Capacity = 12
+            }
+        );
     }
 }
