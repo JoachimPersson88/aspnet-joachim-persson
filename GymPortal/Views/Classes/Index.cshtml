@@ -1,0 +1,38 @@
+﻿@model List<GymPortal.Web.ViewModels.GymClassViewModel>
+
+@{
+    ViewData["Title"] = "Pass";
+}
+
+<h2>Tillgängliga pass</h2>
+
+@if (!Model.Any())
+{
+    <p>Det finns inga pass just nu.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Kategori</th>
+                <th>Instruktör</th>
+                <th>Tid</th>
+                <th>Platser</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var gymClass in Model)
+            {
+                <tr>
+                    <td>@gymClass.Name</td>
+                    <td>@gymClass.Category</td>
+                    <td>@gymClass.Instructor</td>
+                    <td>@gymClass.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@gymClass.Capacity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
