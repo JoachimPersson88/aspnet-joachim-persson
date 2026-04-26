@@ -6,6 +6,16 @@
 
 <h2>Tillgängliga pass</h2>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <p style="color: green;">@TempData["SuccessMessage"]</p>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <p style="color: red;">@TempData["ErrorMessage"]</p>
+}
+
 @if (!Model.Any())
 {
     <p>Det finns inga pass just nu.</p>
@@ -20,6 +30,7 @@ else
                 <th>Instruktör</th>
                 <th>Tid</th>
                 <th>Platser</th>
+                <th>Bokning</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +42,20 @@ else
                     <td>@gymClass.Instructor</td>
                     <td>@gymClass.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@gymClass.Capacity</td>
+                    <td>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="Booking" asp-action="Create" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="gymClassId" value="@gymClass.Id" />
+                                <button type="submit">Boka</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login">Logga in för att boka</a>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
