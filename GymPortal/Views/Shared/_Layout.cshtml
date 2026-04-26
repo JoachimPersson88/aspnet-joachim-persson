@@ -36,6 +36,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Classes" asp-action="Index">Pass</a>
                             </li>
+
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Booking" asp-action="MyBookings">Mina bokningar</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <span class="nav-link text-dark">Hej @User.Identity.Name</span>
                             </li>
