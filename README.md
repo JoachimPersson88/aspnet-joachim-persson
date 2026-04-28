@@ -29,9 +29,3 @@ Projektet innehåller enhetstester för domänlogik:
 - GymClass
 
 Tester är skrivna med xUnit.
-
-## Hur man kör projektet
-
-1. Klona projektet
-2. Öppna i Visual Studio
-3. Kör:
