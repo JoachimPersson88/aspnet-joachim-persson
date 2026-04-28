@@ -29,27 +29,50 @@ public class BookingController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Guid gymClassId)
     {
-        var user = await _userManager.GetUserAsync(User);
+        var user = await _userManager.GetUserAsync(User); // Hämta den inloggade användaren. Om användaren inte är inloggad, returnera en Challenge-resultat som kommer att omdirigera användaren till inloggningssidan.
 
         if (user == null)
             return Challenge();
 
+        // Kontrollera om det angivna gympasset finns i databasen.
         var gymClassExists = await _context.GymClasses
             .AnyAsync(x => x.Id == gymClassId);
 
-        // Kontrollera om det angivna gympasset finns i databasen. Om det inte finns, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
-        if (!gymClassExists)
+        // Kontrollera om det angivna gympasset finns i databasen.
+        // Om det inte finns, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
+        var gymClass = await _context.GymClasses
+            .FirstOrDefaultAsync(x => x.Id == gymClassId);
+
+        // Kontrollera om det angivna gympasset finns i databasen.
+        // Om det inte finns, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
+        if (gymClass == null)
         {
-            TempData["ErrorMessage"] = "Passet kunde inte hittas."; // Om det inte finns, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
+            TempData["ErrorMessage"] = "Passet kunde inte hittas.";
             return RedirectToAction("Index", "Classes");
         }
 
+        // Kontrollera om det angivna gympasset har nått sin kapacitet genom att räkna antalet befintliga bokningar för det passet.
+        // Om kapaciteten är uppnådd, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
+        var currentBookings = await _context.Bookings
+            .CountAsync(x => x.GymClassId == gymClassId);
+
+        // Kontrollera om det angivna gympasset har nått sin kapacitet genom att räkna antalet befintliga bokningar för det passet.
+        // Om kapaciteten är uppnådd, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
+        if (currentBookings >= gymClass.Capacity)
+        {
+            TempData["ErrorMessage"] = "Passet är fullt.";
+            return RedirectToAction("Index", "Classes");
+        }
+
+        // Kontrollera om användaren redan har bokat det angivna gympasset.
+        // Om så är fallet, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
         var alreadyBooked = await _context.Bookings
             .AnyAsync(x => x.UserId == user.Id && x.GymClassId == gymClassId);
 
+        // Kontrollera om användaren redan har bokat det angivna gympasset.
         if (alreadyBooked)
         {
-            TempData["ErrorMessage"] = "Du har redan bokat detta pass."; // Kontrollera om användaren redan har bokat det angivna gympasset. Om så är fallet, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
+            TempData["ErrorMessage"] = "Du har redan bokat detta pass.";
             return RedirectToAction("Index", "Classes");
         }
 
@@ -103,7 +126,7 @@ public class BookingController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Cancel(Guid bookingId)
     {
-        var user = await _userManager.GetUserAsync(User);
+        var user = await _userManager.GetUserAsync(User); // Hämta den inloggade användaren. Om användaren inte är inloggad, returnera en Challenge-resultat som kommer att omdirigera användaren till inloggningssidan.
 
         if (user == null)
             return Challenge();
@@ -111,7 +134,8 @@ public class BookingController : Controller
         var booking = await _context.Bookings
             .FirstOrDefaultAsync(x => x.Id == bookingId && x.UserId == user.Id);
 
-        // Hämta bokningen som matchar det angivna boknings-ID:t och tillhör den inloggade användaren. Om bokningen inte hittas, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till "MyBookings"-sidan.
+        // Hämta bokningen som matchar det angivna boknings-ID:t och tillhör den inloggade användaren.
+        // Om bokningen inte hittas, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till "MyBookings"-sidan.
         if (booking == null)
         {
             // Om bokningen inte hittas, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till "MyBookings"-sidan.
