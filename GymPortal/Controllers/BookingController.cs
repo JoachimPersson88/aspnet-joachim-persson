@@ -56,6 +56,9 @@ public class BookingController : Controller
         var currentBookings = await _context.Bookings
             .CountAsync(x => x.GymClassId == gymClassId);
 
+
+        // if (currentBookings >= 1) <----------------- Bara för testa Passet är fullt
+
         // Kontrollera om det angivna gympasset har nått sin kapacitet genom att räkna antalet befintliga bokningar för det passet.
         // Om kapaciteten är uppnådd, sätt ett felmeddelande i TempData och omdirigera användaren tillbaka till klasser-sidan.
         if (currentBookings >= gymClass.Capacity)

@@ -45,11 +45,18 @@ else
                     <td>
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
-                            <form asp-controller="Booking" asp-action="Create" method="post">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="gymClassId" value="@gymClass.Id" />
-                                <button type="submit">Boka</button>
-                            </form>
+                            if (gymClass.SpotsLeft > 0)
+                            {
+                                <form asp-controller="Booking" asp-action="Create" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="gymClassId" value="@gymClass.Id" />
+                                    <button type="submit">Boka</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <button disabled style="color: gray;">Fullt</button>
+                            }
                         }
                         else
                         {
