@@ -1,0 +1,61 @@
+﻿@model GymPortal.Web.ViewModels.MyPageViewModel
+
+<h2>Min sida</h2>
+
+<h3>Profil</h3>
+<p><strong>Namn:</strong> @Model.Profile.FirstName @Model.Profile.LastName</p>
+<p><strong>E-post:</strong> @Model.Profile.Email</p>
+<p><strong>Telefon:</strong> @Model.Profile.PhoneNumber</p>
+
+<a asp-controller="Account" asp-action="Profile">Redigera profil</a>
+
+<hr />
+
+<h3>Medlemskap</h3>
+
+@if (Model.Membership == null)
+{
+    <p>Du har inget medlemskap ännu.</p>
+    <a asp-controller="Membership" asp-action="Index">Skapa medlemskap</a>
+}
+else
+{
+    <p><strong>Typ:</strong> @Model.Membership.Type</p>
+    <p><strong>Status:</strong> @Model.Membership.Status</p>
+    <p><strong>Startdatum:</strong> @Model.Membership.StartDate?.ToString("yyyy-MM-dd")</p>
+}
+
+<hr />
+
+<h3>Mina bokningar</h3>
+
+@if (!Model.Bookings.Any())
+{
+    <p>Du har inga bokade pass.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Pass</th>
+                <th>Kategori</th>
+                <th>Instruktör</th>
+                <th>Tid</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model.Bookings)
+            {
+                <tr>
+                    <td>@booking.ClassName</td>
+                    <td>@booking.Category</td>
+                    <td>@booking.Instructor</td>
+                    <td>@booking.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-controller="Booking" asp-action="MyBookings">Hantera bokningar</a>
+}
