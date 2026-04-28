@@ -28,7 +28,8 @@ public class ClassesController : Controller
                 Category = x.Category,
                 Instructor = x.Instructor,
                 StartTime = x.StartTime,
-                Capacity = x.Capacity
+                Capacity = x.Capacity,
+                BookedCount = _context.Bookings.Count(b => b.GymClassId == x.Id)
             })
             .ToListAsync(); // Konverterar resultatet till en lista asynkront, vilket gör att metoden inte blockerar tråden medan den väntar på att databasoperationen ska slutföras.
 

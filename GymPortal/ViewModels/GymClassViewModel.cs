@@ -8,4 +8,6 @@ public class GymClassViewModel
     public string? Instructor { get; set; }
     public DateTime StartTime { get; set; }
     public int Capacity { get; set; }
+    public int BookedCount { get; set; }
+    public int SpotsLeft => Capacity - BookedCount;
 }
