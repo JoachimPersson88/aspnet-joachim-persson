@@ -29,3 +29,121 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+
+:root {
+    --dark: #080513;
+    --dark-soft: #12101c;
+    --lime: #d8ff1f;
+    --text: #252631;
+    --muted: #777;
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --border: #eeeeee;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.page-wrapper {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.site-header {
+    background: linear-gradient(135deg, #090615, #17151d);
+    border-radius: 18px;
+    padding: 18px 26px;
+    margin: 20px auto;
+    max-width: 1320px;
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    color: white;
+    font-weight: 700;
+    font-size: 22px;
+    text-decoration: none;
+}
+
+    .logo span {
+        color: var(--lime);
+    }
+
+.nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .nav-links a,
+    .nav-links span {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+.btn-lime {
+    background: var(--lime);
+    color: #111;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 24px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.auth-card {
+    background: white;
+    max-width: 620px;
+    margin: 140px auto;
+    padding: 48px;
+    border-radius: 18px;
+}
+
+    .auth-card h1 {
+        font-size: 42px;
+        margin-bottom: 12px;
+    }
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+    .form-group label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+.form-control-custom {
+    width: 100%;
+    border: none;
+    background: #f4f4f4;
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.footer-card {
+    background: linear-gradient(135deg, #090615, #17151d);
+    color: white;
+    border-radius: 18px;
+    padding: 48px;
+    max-width: 980px;
+    margin: 80px auto 30px;
+}
