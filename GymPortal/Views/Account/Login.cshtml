@@ -1,33 +1,58 @@
-﻿@model LoginViewModel
+﻿@model GymPortal.Web.ViewModels.LoginViewModel
 
 @{
-    ViewData["Title"] = "Logga in";
+    ViewData["Title"] = "Sign In";
 }
 
-<h2>Logga in</h2>
+<div class="auth-page">
 
-<form asp-action="Login" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="auth-card">
 
-    <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+        <h1>Welcome Back!</h1>
+
+        <p class="auth-subtitle">
+            Log in to continue your fitness journey with full access
+            to your customized program and bookings.
+        </p>
+
+        <div class="auth-divider"></div>
+
+        <div class="social-login">
+            <button>G</button>
+            <button>f</button>
+            <button>Git</button>
+        </div>
+
+        <div class="or-divider">
+            <span>OR CONTINUE WITH</span>
+        </div>
+
+        <form asp-action="Login" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group-custom">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-input" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-input" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-auth">
+                Continue
+                <span>›</span>
+            </button>
+
+        </form>
+
     </div>
 
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="RememberMe"></label>
-        <input asp-for="RememberMe" />
-    </div>
-
-    <button type="submit">Logga in</button>
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
