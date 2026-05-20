@@ -1,46 +1,76 @@
 ﻿@model GymPortal.Web.ViewModels.RegisterViewModel
 
 @{
-    ViewData["Title"] = "Registrera";
+    ViewData["Title"] = "Sign Up";
 }
 
-<h2>Registrera</h2>
+<div class="auth-page">
 
-<form asp-action="Register" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="auth-card">
 
-    <div>
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
+        <h1>Become a Member</h1>
+
+        <p class="auth-subtitle">
+            Sign up to continue your fitness journey with full access
+            to your customized program, booking history and progress tracking.
+        </p>
+
+        <div class="auth-divider"></div>
+
+        <div class="social-login">
+            <button>G</button>
+            <button>f</button>
+            <button>Git</button>
+        </div>
+
+        <div class="or-divider">
+            <span>OR CONTINUE WITH</span>
+        </div>
+
+        <form asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-grid">
+                <div class="form-group-custom">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-input" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group-custom">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-input" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-input" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-input" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group-custom">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-input" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-auth">
+                Continue
+                <span>›</span>
+            </button>
+        </form>
+
     </div>
 
-    <div>
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" type="password" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>
-
-    <button type="submit">Registrera</button>
-</form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
