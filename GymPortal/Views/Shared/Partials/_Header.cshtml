@@ -1,6 +1,55 @@
-﻿namespace GymPortal.Web.Views.Shared.Partials
-{
-    public class _Header
-    {
-    }
-}
+﻿<header class="site-header">
+    <nav class="site-navbar">
+        <a class="site-logo" asp-controller="Home" asp-action="Index">
+            <span class="site-logo-icon">⚒</span>
+            <span>CoreFitness</span>
+        </a>
+
+        <ul class="site-nav-links">
+            <li>
+                <a asp-controller="Home" asp-action="Index">Fitness Centers</a>
+            </li>
+
+            <li>
+                <a asp-controller="Membership" asp-action="Index">Memberships</a>
+            </li>
+
+            <li>
+                <a asp-controller="Classes" asp-action="Index">Training</a>
+            </li>
+
+            <li>
+                <a asp-controller="Home" asp-action="Privacy">Customer Service</a>
+            </li>
+
+            <li>
+                <a href="#">Store</a>
+            </li>
+        </ul>
+
+        <div class="site-nav-actions">
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Booking" asp-action="MyBookings">Our Classes</a>
+
+                <a class="btn-lime" asp-controller="Account" asp-action="MyPage">
+                    My Account
+                    <span>›</span>
+                </a>
+
+                <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
+                    <button type="submit" class="btn-dark-link">Sign Out</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Register">Become Member</a>
+
+                <a class="btn-lime" asp-controller="Account" asp-action="Login">
+                    Sign In
+                    <span>›</span>
+                </a>
+            }
+        </div>
+    </nav>
+</header>
